@@ -9,7 +9,6 @@ import (
 	"encoding/json"
 	"github.com/jellyterra/go-httpform"
 	"net/http"
-	"net/netip"
 )
 
 func V1GetApi(e *ApiEnv) map[string]http.HandlerFunc {
@@ -21,26 +20,22 @@ func V1GetApi(e *ApiEnv) map[string]http.HandlerFunc {
 			}
 
 			var (
-				sourceIP string
-
 				uuid       = wrap.String("uuid", "")
 				deployTime = wrap.StringRequired("deploy_time")
 				target     = wrap.StringRequired("target")
 			)
-
-			if e.HeaderKeyForConnectingIP == "" {
-				sourceIP = netip.MustParseAddrPort(r.RemoteAddr).Addr().String()
-			} else {
-				sourceIP = r.Header.Get(e.HeaderKeyForConnectingIP)
-			}
-
 			err = wrap.Parse()
 			if err != nil {
 				return http.StatusBadRequest, err
 			}
 
+			var (
+				country  = r.Header.Get(e.HeaderKeyForIPCountry)
+				sourceIP = r.Header.Get(e.HeaderKeyForConnectingIP)
+			)
 			err = e.Database.AddAccessReport(context.Background(), &AccessReport{
 				SourceIP:   sourceIP,
+				Country:    country,
 				UUID:       *uuid,
 				DeployTime: *deployTime,
 				Target:     *target,

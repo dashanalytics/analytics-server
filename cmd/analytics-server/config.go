@@ -16,6 +16,7 @@ type Config struct {
 	Header struct {
 		Key struct {
 			ConnectingIP string `yaml:"connecting_ip"`
+			IPCountry    string `yaml:"ip_country"`
 		} `yaml:"key"`
 	} `yaml:"header"`
 }

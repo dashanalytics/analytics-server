@@ -15,11 +15,13 @@ type ApiEnv struct {
 
 	AccessToken string
 
-	HeaderKeyForConnectingIP string
+	HeaderKeyForConnectingIP,
+	HeaderKeyForIPCountry string
 }
 
 type AccessReport struct {
 	SourceIP string `redis:"SourceIP" json:"source_ip"`
+	Country  string `redis:"Country" json:"country"`
 
 	UUID       string `redis:"UUID" json:"uuid"`
 	DeployTime string `redis:"DeployTime" json:"deploy_time"`

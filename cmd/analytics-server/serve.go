@@ -35,6 +35,7 @@ func Serve(ctx context.Context, config *Config) error {
 			AccessToken: config.AccessToken,
 
 			HeaderKeyForConnectingIP: config.Header.Key.ConnectingIP,
+			HeaderKeyForIPCountry:    config.Header.Key.IPCountry,
 		}
 	)
 
