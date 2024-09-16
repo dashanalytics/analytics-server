@@ -30,6 +30,8 @@ type AccessReport struct {
 
 func Wrap(h func(w http.ResponseWriter, r *http.Request) (int, error)) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+
 		status, err := h(w, r)
 		if status == 0 {
 			return

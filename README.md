@@ -1,4 +1,5 @@
 # analytics-server
+
 Analytics server.
 
 ## Install
@@ -28,8 +29,10 @@ When `cert` and `key` are not blank, the server will run as HTTPS.
 | HTTP Header     | Description                                           |
 |-----------------|-------------------------------------------------------|
 | `connecting_ip` | Source IP. Such as `CF-Connecting-IP` for Cloudflare. |
+| `ip_country`    | IP country. Such as `CF-IPCountry` for Cloudflare.    |
 
 Example: `analytics-server.yaml`
+
 ```yaml
 listen: ":443"
 db: "redis://default:@localhost/0"
