@@ -121,5 +121,53 @@ func V1GetApi(e *ApiEnv) map[string]http.HandlerFunc {
 
 			return 0, nil
 		}),
-	}
+
+		"/getAccessReportsByRange": Wrap(func(w http.ResponseWriter, r *http.Request) (int, error) {
+			ctx := r.Context()
+
+			wrap, err := httpform.WrapFromRequest(r)
+			if err != nil {
+				return http.StatusBadRequest, err
+			}
+
+			var (
+				token = wrap.StringRequired("token")
+				start = wrap.StringRequired("start")
+				end   = wrap.StringRequired("end")
+			)
+
+			err = wrap.Parse()
+			if err != nil {
+				return http.StatusBadRequest, err
+			}
+
+			if *token != e.AccessToken {
+				return http.StatusForbidden, nil
+			}
+
+			timestamps, err := e.Database.GetAccessReportsTimestamps(ctx, *start, *end)
+			if err != nil {
+				return http.StatusInternalServerError, err
+			}
+
+			reportsMap := map[string]AccessReport{}
+
+			for _, timestamp := range timestamps {
+				report, err := e.Database.GetAccessReportByTimestamp(ctx, timestamp)
+				if err != nil {
+					return http.StatusInternalServerError, err
+				}
+
+				reportsMap[timestamp] = report
+			}
+
+			b, err := json.Marshal(reportsMap)
+			if err != nil {
+				return http.StatusInternalServerError, err
+			}
+
+			_, _ = w.Write(b)
+
+			return 0, nil
+	}),
 }

@@ -45,4 +45,5 @@ access_token: ""
 header:
   key:
     connecting_ip: "CF-Connecting-IP"
+    ip_country: "CF-IPCountry"
 ```
