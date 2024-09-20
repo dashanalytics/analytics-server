@@ -169,5 +169,6 @@ func V1GetApi(e *ApiEnv) map[string]http.HandlerFunc {
 			_, _ = w.Write(b)
 
 			return 0, nil
-	}),
+		}),
+	}
 }
