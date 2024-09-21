@@ -21,6 +21,7 @@ func V1GetApi(e *ApiEnv) map[string]http.HandlerFunc {
 
 			var (
 				uuid       = wrap.String("uuid", "")
+				userAgent  = wrap.String("user_agent", "")
 				deployTime = wrap.StringRequired("deploy_time")
 				target     = wrap.StringRequired("target")
 			)
@@ -37,6 +38,7 @@ func V1GetApi(e *ApiEnv) map[string]http.HandlerFunc {
 				SourceIP:   sourceIP,
 				Country:    country,
 				UUID:       *uuid,
+				UserAgent:  *userAgent,
 				DeployTime: *deployTime,
 				Target:     *target,
 			})

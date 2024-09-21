@@ -24,6 +24,7 @@ type AccessReport struct {
 	Country  string `redis:"Country" json:"country"`
 
 	UUID       string `redis:"UUID" json:"uuid"`
+	UserAgent  string `redis:"UserAgent" json:"user_agent"`
 	DeployTime string `redis:"DeployTime" json:"deploy_time"`
 	Target     string `redis:"Target" json:"target"`
 }
