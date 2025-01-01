@@ -65,6 +65,13 @@ func Serve(ctx context.Context, config *Config) error {
 		}
 	}()
 
+	go func() {
+		err := db.CountAll(ctx, config.UserAgentFilter)
+		if err != nil {
+			log.Println("Occurred an error while counting targets:", err)
+		}
+	}()
+
 	switch {
 	case config.Key == "" || config.Cert == "":
 		log.Println("Listen on http://" + config.Listen)

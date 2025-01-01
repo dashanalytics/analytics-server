@@ -7,6 +7,7 @@ package server
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/jellyterra/go-httpform"
 	"net/http"
 )
@@ -169,6 +170,87 @@ func V1GetApi(e *ApiEnv) map[string]http.HandlerFunc {
 			}
 
 			_, _ = w.Write(b)
+
+			return 0, nil
+		}),
+
+		"/getAccessCountOfTarget": Wrap(func(w http.ResponseWriter, r *http.Request) (int, error) {
+			ctx := r.Context()
+
+			wrap, err := httpform.WrapFromRequest(r)
+			if err != nil {
+				return http.StatusBadRequest, err
+			}
+
+			var (
+				target = wrap.StringRequired("target")
+			)
+
+			err = wrap.Parse()
+			if err != nil {
+				return http.StatusBadRequest, err
+			}
+
+			c, err := e.Database.GetAccessCountOfTarget(ctx, *target)
+			if err != nil {
+				return http.StatusInternalServerError, err
+			}
+
+			_, _ = w.Write([]byte(c))
+
+			return 0, nil
+		}),
+
+		"/getAddrCountOfTarget": Wrap(func(w http.ResponseWriter, r *http.Request) (int, error) {
+			ctx := r.Context()
+
+			wrap, err := httpform.WrapFromRequest(r)
+			if err != nil {
+				return http.StatusBadRequest, err
+			}
+
+			var (
+				target = wrap.StringRequired("target")
+			)
+
+			err = wrap.Parse()
+			if err != nil {
+				return http.StatusBadRequest, err
+			}
+
+			c, err := e.Database.GetAccessAddrCountOfTarget(ctx, *target)
+			if err != nil {
+				return http.StatusInternalServerError, err
+			}
+
+			_, _ = w.Write([]byte(fmt.Sprint(c)))
+
+			return 0, nil
+		}),
+
+		"/getUuidCountOfTarget": Wrap(func(w http.ResponseWriter, r *http.Request) (int, error) {
+			ctx := r.Context()
+
+			wrap, err := httpform.WrapFromRequest(r)
+			if err != nil {
+				return http.StatusBadRequest, err
+			}
+
+			var (
+				target = wrap.StringRequired("target")
+			)
+
+			err = wrap.Parse()
+			if err != nil {
+				return http.StatusBadRequest, err
+			}
+
+			c, err := e.Database.GetAccessUuidCountOfTarget(ctx, *target)
+			if err != nil {
+				return http.StatusInternalServerError, err
+			}
+
+			_, _ = w.Write([]byte(fmt.Sprint(c)))
 
 			return 0, nil
 		}),

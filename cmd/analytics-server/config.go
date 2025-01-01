@@ -13,6 +13,8 @@ type Config struct {
 
 	AccessToken string `yaml:"access_token"`
 
+	UserAgentFilter []string `yaml:"user_agent_filter"`
+
 	Header struct {
 		Key struct {
 			ConnectingIP string `yaml:"connecting_ip"`

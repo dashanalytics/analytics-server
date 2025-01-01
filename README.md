@@ -35,12 +35,16 @@ Example: `analytics-server.yaml`
 
 ```yaml
 listen: ":443"
-db: "redis://default:@localhost/0"
+db: "redis://default:@::1/0"
 
 key: "/etc/letsencrypt/live/symboltics.com/privkey.pem"
 cert: "/etc/letsencrypt/live/symboltics.com/fullchain.pem"
 
 access_token: ""
+
+user_agent_filter:
+  - bot
+  - crawler
 
 header:
   key:
