@@ -27,6 +27,8 @@ type AccessReport struct {
 	UserAgent  string `redis:"UserAgent" json:"user_agent"`
 	DeployTime string `redis:"DeployTime" json:"deploy_time"`
 	Target     string `redis:"Target" json:"target"`
+	Time       int    `redis:"Time" json:"time"`
+	Confirmed  int    `redis:"Confirmed" json:"confirmed"`
 }
 
 func Wrap(h func(w http.ResponseWriter, r *http.Request) (int, error)) http.HandlerFunc {

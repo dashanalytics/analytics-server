@@ -25,6 +25,8 @@ func V1GetApi(e *ApiEnv) map[string]http.HandlerFunc {
 				userAgent  = wrap.String("user_agent", "")
 				deployTime = wrap.StringRequired("deploy_time")
 				target     = wrap.StringRequired("target")
+				time       = wrap.Int("time", 0)
+				confirmed  = wrap.Int("confirmed", 0)
 			)
 			err = wrap.Parse()
 			if err != nil {
@@ -42,6 +44,8 @@ func V1GetApi(e *ApiEnv) map[string]http.HandlerFunc {
 				UserAgent:  *userAgent,
 				DeployTime: *deployTime,
 				Target:     *target,
+				Time:       *time,
+				Confirmed:  *confirmed,
 			})
 			if err != nil {
 				return http.StatusInternalServerError, err

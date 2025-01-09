@@ -92,7 +92,7 @@ func (db *Database) CountAll(ctx context.Context, userAgentFilter []string) erro
 				break
 			}
 		}
-		if isFiltered {
+		if report.Confirmed == 0 || isFiltered {
 			continue
 		}
 
